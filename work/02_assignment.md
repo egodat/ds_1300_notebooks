@@ -134,10 +134,6 @@ dates.head()
 ```
 
 ```python
-facts.head()
-```
-
-```python
 states = pd.merge(facts,dates,left_on='USPS_code',right_on='Abbreviation',how='outer')
 ```
 
@@ -147,6 +143,10 @@ states.head()
 
 ```python
 states['Date']=pd.to_datetime(states['Date'])
+```
+
+```python
+states.head()
 ```
 
 ```python
@@ -190,33 +190,32 @@ import matplotlib as plt
 %config InlineBackend.figure_format ='retina' #This makes your plot clearer
 
 
-plot = statesbydate[['city_1_pop','Abbreviation']].plot(kind='bar',figsize=(10,4),color='black')
-plot.set_xticklabels(statesbydate['Abbreviation']);
+plot = statesbydate[['city_1_pop','City_1']].plot(kind='bar',figsize=(10,4),color='black')
+plot.set_xticklabels(statesbydate['City_1']);
 ```
 
 # Question 10
 >10) Make two additional graphs like the one above but one for land area (green bars) and one for water area (blue bars)
 
 ```python
-# Sample code to help with the plots
-
-import matplotlib as plt
-%config InlineBackend.figure_format ='retina' #This makes your plot clearer
-
-
-plot = statesbydate[['Area_land','Abbreviation']].plot(kind='bar',figsize=(10,4),color='green')
+plot = statesbydate[['Area_land','Abbreviation']].plot(kind='bar',figsize=(10,4),color='green',grid=True)
 plot.set_xticklabels(statesbydate['Abbreviation']);
 ```
 
 ```python
-# Sample code to help with the plots
-
-import matplotlib as plt
-%config InlineBackend.figure_format ='retina' #This makes your plot clearer
-
-
-plot = statesbydate[['Area_water','Abbreviation']].plot(kind='bar',figsize=(10,4),color='blue')
+plot = statesbydate[['Area_water','Abbreviation']].plot(kind='bar',figsize=(10,4),color='blue',grid=True)
 plot.set_xticklabels(statesbydate['Abbreviation']);
+```
+
+# Extra stuff for fun
+
+```python
+states_territories = statesbydate[statesbydate['Status']!='Federal District']
+```
+
+```python
+plot = states_territories[['PopDensity2020','Abbreviation']].plot(kind='bar',figsize=(10,4),color='orange',grid=True)
+plot.set_xticklabels(states_territories['Abbreviation']);
 ```
 
 ```python

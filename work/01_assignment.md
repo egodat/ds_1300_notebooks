@@ -160,6 +160,7 @@ len(ourlist)
 
 ```python
 mylist=['Any','list','will','do']
+mylist[1]
 ```
 
 > How long is your list?
