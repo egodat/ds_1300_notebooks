@@ -9,3 +9,4 @@ dask[complete]
 pyarrow
 statsmodels
 scikit-learn
+tensorflow

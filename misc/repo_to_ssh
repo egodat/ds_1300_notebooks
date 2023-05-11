@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Variables
+repo=${HOME}/ds_1300_notebooks
+key_base=${HOME}/.ssh/id_ed25519_ds1300
+
+# Get user details
+printf "First Name: "
+read first
+printf "Last Name: "
+read last
+printf "GitHub Email Address: "
+read email
+
+# Set Git config options
+git config --global --replace-all user.name "$(printf '%s %s' ${first} ${last})"
+git config --global --replace-all user.email "${email}"
+
+# Generate key and add to SSH config
+rm -rf ${key_base}*
+ssh-keygen -q -N "" -t ed25519 -C ${email} -f ${key_base}
+printf 'Host *github.com\n  IdentityFile %s\n' ${key_base} >> ~/.ssh/config
+chmod -R go= ~/.ssh
+
+# Update repo to use SSH instead of HTTPS
+if [[ -d ${repo} ]]; then
+  cd ${repo}
+  if $(git remote -v | grep origin | grep -q https); then
+    username=$(git remote -v | head -1 | cut -d'/' -f4)
+    git remote remove origin
+    git remote add origin $(printf 'git@github.com:%s/ds_1300_notebooks.git' ${username})
+  fi
+fi
+
+# Print instructions
+printf "\nCopy the following information for Step 1 of:\n\nhttps://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account\n\n"
+cat ${key_base}.pub
+printf "\nThe first time you push to your repo you will need to use:\n\ngit push --set-upstream origin main\n\n"
+
