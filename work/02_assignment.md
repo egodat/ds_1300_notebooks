@@ -111,7 +111,15 @@ birds2.sort_values(by='Area_land',ascending=False).head()
 
 
 ```python
+len(facts[facts['Capital_pop']==facts['city_1_pop']][['State','Capital']])
+```
+
+```python
 len(facts[facts['Capital']==facts['City_1']][['State','Capital']])
+```
+
+```python
+set(facts[facts['Capital_pop']==facts['city_1_pop']]['State'].values)-set(facts[facts['Capital']==facts['City_1']]['State'].values)
 ```
 
 # Question 6
